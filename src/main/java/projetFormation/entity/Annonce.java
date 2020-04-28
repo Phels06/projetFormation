@@ -119,11 +119,11 @@ public class Annonce {
 		this.chiens = chiens;
 	}
 
-	public Set<Postuler> getPostulers() {
+	public List<Postuler> getPostulers() {
 		return postulers;
 	}
 
-	public void setPostulers(Set<Postuler> postulers) {
+	public void setPostulers(List<Postuler> postulers) {
 		this.postulers = postulers;
 	}
 
