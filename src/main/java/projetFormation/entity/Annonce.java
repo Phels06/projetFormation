@@ -1,4 +1,4 @@
-package projetFormation.dao;
+package projetFormation.entity;
 
 import javax.persistence.Entity;
 

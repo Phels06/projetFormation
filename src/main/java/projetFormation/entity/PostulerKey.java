@@ -7,8 +7,6 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import projetFormation.dao.Annonce;
-
 @Embeddable
 public class PostulerKey implements Serializable {
 	@ManyToOne
