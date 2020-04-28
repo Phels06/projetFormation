@@ -14,7 +14,7 @@
 				value="org.postgresql.Driver" />
 			<!-- url -->
 			<property name="hibernate.connection.url"
-				value="jdbc:postgresql://127.0.0.1:5432/jpa" />
+				value="jdbc:postgresql://127.0.0.1:5432/projet_formation" />
 			<!-- login -->
 			<property name="hibernate.connection.user" value="postgres" />
 			<!-- password -->
@@ -30,7 +30,7 @@
 				au lancement et on cree les tables -->
 			<!-- create-drop -->
 			<!-- update => ajout de colonnes manquantes dans les tables -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
