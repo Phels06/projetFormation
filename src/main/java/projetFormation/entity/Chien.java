@@ -143,6 +143,16 @@ public class Chien {
 	}
 
 
+	public Annonce getAnnonce() {
+		return annonce;
+	}
+
+
+	public void setAnnonce(Annonce annonce) {
+		this.annonce = annonce;
+	}
+
+
 	public int getVersion() {
 		return version;
 	}
