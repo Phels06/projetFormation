@@ -51,10 +51,10 @@ public class Annonce {
 			@AttributeOverride(name = "prixTotal", column = @Column(name = "total_price")) })
 	private Tarif tarif;
 	@OneToOne()
-	@JoinColumn(name = "person", foreignKey = @ForeignKey(name = "ad_master_fk"))
+	@JoinColumn(name = "master", foreignKey = @ForeignKey(name = "ad_master_fk"))
 	private Personne maitre;
 	@OneToOne()
-	@JoinColumn(name = "person", foreignKey = @ForeignKey(name = "ad_walker_fk"))
+	@JoinColumn(name = "walker", foreignKey = @ForeignKey(name = "ad_walker_fk"))
 	private Personne promeneur;
 	@OneToMany(mappedBy = "annonce")
 	private Set<Chien> chiens = new HashSet<>();
