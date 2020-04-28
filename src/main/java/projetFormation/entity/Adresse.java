@@ -99,7 +99,5 @@ public class Adresse {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

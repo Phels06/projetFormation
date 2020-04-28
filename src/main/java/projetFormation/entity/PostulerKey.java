@@ -10,10 +10,10 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class PostulerKey implements Serializable {
 	@ManyToOne
-	@JoinColumn(name = "person", foreignKey = @ForeignKey(name = "person_ad_person_fk"))
+	@JoinColumn(name = "id_person_ad_person", foreignKey = @ForeignKey(name = "person_ad_person_fk"))
 	private Personne personne;
 	@ManyToOne
-	@JoinColumn(name = "ad", foreignKey = @ForeignKey(name = "person_ad_ad_fk"))
+	@JoinColumn(name = "id_person_ad_ad", foreignKey = @ForeignKey(name = "person_ad_ad_fk"))
 	private Annonce annonce;
 
 	public PostulerKey() {

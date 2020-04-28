@@ -32,13 +32,13 @@ import javax.persistence.Id;
 @Table(name = "ad")
 @NamedQueries({
 		@NamedQuery(query = "select a from Annonce a left join fetch a.maitre m left join fetch a.promeneur pr left join fetch a.chiens c left join fetch a.postulers po", name = "Annonce.findAll") })
-@SequenceGenerator(name = "seqAnnonce", sequenceName = "seq_annonce", initialValue = 100, allocationSize = 1)
+@SequenceGenerator(name = "seqAnnonce", sequenceName = "seq_ad", initialValue = 100, allocationSize = 1)
 public class Annonce {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqAnnonce")
-	@Column(name = "id_annonce")
+	@Column(name = "id_ad")
 	private Integer id;
-	@Column(name = "date_annonce")
+	@Column(name = "date_ad")
 	@Temporal(TemporalType.DATE)
 	private Date dateAnnonce;
 	@Enumerated(EnumType.STRING)
@@ -46,15 +46,15 @@ public class Annonce {
 	@Embedded
 	@AttributeOverrides({ @AttributeOverride(name = "nbChiens", column = @Column(name = "number_of_dogs")),
 			@AttributeOverride(name = "nbHeures", column = @Column(name = "number_of_hours")),
-			@AttributeOverride(name = "prixIRTchienIRTheure", column = @Column(name = "price_in_respect_to_dog_in_respect_to_hour")),
+			@AttributeOverride(name = "prixIRTchienIRTheure", column = @Column(name = "price_irt_dog_irt_hour")),
 			@AttributeOverride(name = "taxe", column = @Column(name = "tax")),
 			@AttributeOverride(name = "prixTotal", column = @Column(name = "total_price")) })
 	private Tarif tarif;
 	@OneToOne()
-	@JoinColumn(name = "master", foreignKey = @ForeignKey(name = "ad_master_fk"))
+	@JoinColumn(name = "id_master", foreignKey = @ForeignKey(name = "ad_master_fk"))
 	private Personne maitre;
 	@OneToOne()
-	@JoinColumn(name = "walker", foreignKey = @ForeignKey(name = "ad_walker_fk"))
+	@JoinColumn(name = "id_walker", foreignKey = @ForeignKey(name = "ad_walker_fk"))
 	private Personne promeneur;
 	@OneToMany(mappedBy = "annonce")
 	private Set<Chien> chiens = new HashSet<>();

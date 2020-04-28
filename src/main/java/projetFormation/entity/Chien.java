@@ -1,7 +1,5 @@
 package projetFormation.entity;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,14 +16,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-
-
-
 @Entity
 @Table(name = "dog")
 @SequenceGenerator(name = "seqChien", sequenceName = "seq_dog", initialValue = 100, allocationSize = 1)
-@NamedQueries({@NamedQuery(query="select c from Chien c", name = "Chien.findAll"),
-	@NamedQuery(query="select c from Chien c where c.surnom = :surnom", name = "Chien.findBySurnom")})
+@NamedQueries({ @NamedQuery(query = "select c from Chien c", name = "Chien.findAll"),
+		@NamedQuery(query = "select c from Chien c where c.surnom = :surnom", name = "Chien.findBySurnom") })
 public class Chien {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqChien")
@@ -40,26 +35,23 @@ public class Chien {
 	private Integer age;
 	@Column(name = "picture", length = 150)
 	private String photo;
-	@Column(name = "weigth", length = 10)
+	@Column(name = "weigth")
 	private Integer poids;
 	@Column(name = "breed", length = 150)
 	private String race;
 	@ManyToOne
-	@JoinColumn(name = "ad", foreignKey = @ForeignKey(name="dog_ad_fk"))
+	@JoinColumn(name = "id_ad", foreignKey = @ForeignKey(name = "dog_ad_fk"))
 	private Annonce annonce;
 	@Version
 	private int version;
-	
-	
+
 	public Chien() {
 	}
-
 
 	public Chien(String surnom, Integer age) {
 		this.surnom = surnom;
 		this.age = age;
 	}
-
 
 	public Chien(String surnom, SexeChien sexeChien, Integer age, String photo, Integer poids, String race,
 			int version) {
@@ -72,105 +64,86 @@ public class Chien {
 		this.version = version;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public String getSurnom() {
 		return surnom;
 	}
-
 
 	public void setSurnom(String surnom) {
 		this.surnom = surnom;
 	}
 
-
 	public SexeChien getSexeChien() {
 		return sexeChien;
 	}
-
 
 	public void setSexeChien(SexeChien sexeChien) {
 		this.sexeChien = sexeChien;
 	}
 
-
 	public Integer getAge() {
 		return age;
 	}
-
 
 	public void setAge(Integer age) {
 		this.age = age;
 	}
 
-
 	public String getPhoto() {
 		return photo;
 	}
-
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
-
 	public Integer getPoids() {
 		return poids;
 	}
-
 
 	public void setPoids(Integer poids) {
 		this.poids = poids;
 	}
 
-
 	public String getRace() {
 		return race;
 	}
-
 
 	public void setRace(String race) {
 		this.race = race;
 	}
 
-
 	public Annonce getAnnonce() {
 		return annonce;
 	}
-
 
 	public void setAnnonce(Annonce annonce) {
 		this.annonce = annonce;
 	}
 
-
 	public int getVersion() {
 		return version;
 	}
 
-
 	public void setVersion(int version) {
 		this.version = version;
 	}
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + version;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -186,16 +159,9 @@ public class Chien {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (version != other.version)
+			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

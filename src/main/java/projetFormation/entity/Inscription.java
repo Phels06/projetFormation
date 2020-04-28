@@ -3,78 +3,63 @@ package projetFormation.entity;
 import java.time.LocalDate;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Embeddable
 public class Inscription {
+	//@Temporal(TemporalType.DATE) ??
 	private LocalDate dateInscription;
 	private String mail;
-	private String motdePasse;
-	
-	
+	private String motDePasse;
+
 	public Inscription() {
 	}
 
-
-	public Inscription(LocalDate dateInscription, String mail, String motdePasse) {
+	public Inscription(LocalDate dateInscription, String mail, String motDePasse) {
 		this.dateInscription = dateInscription;
 		this.mail = mail;
-		this.motdePasse = motdePasse;
+		this.motDePasse = motDePasse;
 	}
 
-	public Inscription(String mail, String motdePasse) {
+	public Inscription(String mail, String motDePasse) {
 		this.dateInscription = LocalDate.now();
 		this.mail = mail;
-		this.motdePasse = motdePasse;
+		this.motDePasse = motDePasse;
 	}
-
-
 
 	public LocalDate getDateInscription() {
 		return dateInscription;
 	}
 
-
-
 	public void setDateInscription(LocalDate dateInscription) {
 		this.dateInscription = dateInscription;
 	}
-
-
 
 	public String getMail() {
 		return mail;
 	}
 
-
-
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
-
-
 	public String getMotdePasse() {
-		return motdePasse;
+		return motDePasse;
 	}
 
-
-
-	public void setMotdePasse(String motdePasse) {
-		this.motdePasse = motdePasse;
+	public void setMotdePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
 	}
-
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
-		result = prime * result + ((motdePasse == null) ? 0 : motdePasse.hashCode());
+		result = prime * result + ((motDePasse == null) ? 0 : motDePasse.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -90,16 +75,12 @@ public class Inscription {
 				return false;
 		} else if (!mail.equals(other.mail))
 			return false;
-		if (motdePasse == null) {
-			if (other.motdePasse != null)
+		if (motDePasse == null) {
+			if (other.motDePasse != null)
 				return false;
-		} else if (!motdePasse.equals(other.motdePasse))
+		} else if (!motDePasse.equals(other.motDePasse))
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }
