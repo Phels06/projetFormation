@@ -1,4 +1,4 @@
-package projetFormation;
+package projetFormation.test;
 
 
 
