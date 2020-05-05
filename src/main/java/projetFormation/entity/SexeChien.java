@@ -12,4 +12,10 @@ public enum SexeChien {
 		return sexeChien;
 	}
 
+	public void setSexeChien(String sexeChien) {
+		this.sexeChien = sexeChien;
+	}
+	
+	
+
 }
