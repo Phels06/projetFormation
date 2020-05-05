@@ -37,6 +37,11 @@ public class TestAnnonce {
 	public static void initDateFormat() {
 		sdf = new SimpleDateFormat("dd/MM/yyyy");
 	}
+	
+	@Test
+	public void testAnnonceService() {
+		assertNotNull(annonceService);
+	}
 
 	@Test
 	public void testAnnonceRepository() {
@@ -65,7 +70,7 @@ public class TestAnnonce {
 	public void testServiceAjoutAnnonce() {
 		Annonce a;
 		try {
-			a = new Annonce(sdf.parse("10/05/2020"), Note.N5);
+			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
 			annonceService.ajout(a);
 			
 			//assertTrue(annonceRepository.findById()(id)(a.getId()).isPresent());
@@ -110,7 +115,9 @@ public class TestAnnonce {
 		try {
 			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
 			annonceRepository.save(a);
-			
+
+			assertNotNull(a.getId());
+			//System.out.println(annonceService.recherche(a.getId()));
 			assertTrue(annonceService.recherche(a.getId()) != null);
 		} catch (ParseException e) {
 			e.printStackTrace();
