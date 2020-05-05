@@ -5,8 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projetFormation.entity.Annonce;
-import projetFormation.entity.Personne;
 import projetFormation.entity.Postuler;
 import projetFormation.entity.PostulerKey;
 import projetFormation.repository.PostulerRepository;
