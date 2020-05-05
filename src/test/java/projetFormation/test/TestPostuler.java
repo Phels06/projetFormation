@@ -2,12 +2,7 @@ package projetFormation.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import java.text.ParseException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import projetFormation.config.AppConfig;
 import projetFormation.entity.Adresse;
 import projetFormation.entity.Annonce;
-import projetFormation.entity.Chien;
 import projetFormation.entity.Civilite;
 import projetFormation.entity.Inscription;
-import projetFormation.entity.Note;
 import projetFormation.entity.Personne;
 import projetFormation.entity.Postuler;
 import projetFormation.entity.PostulerKey;
