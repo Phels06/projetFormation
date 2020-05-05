@@ -25,12 +25,6 @@ public class PostulerService {
 		return succes;
 	}
 
-//	public void ajout2(Postuler postuler) {
-//		if (postuler.getId() != null) {
-//			postulerRepository.save(postuler);
-//		}
-//	}
-
 	public Postuler recherche(PostulerKey id) {
 		Optional<Postuler> opt = postulerRepository.findById(id);
 		if (opt.isPresent()) {
