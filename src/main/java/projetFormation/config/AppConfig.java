@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -19,9 +20,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@ComponentScan("projetFormation.service")
 @EnableTransactionManagement
 @PropertySource("classpath:config.properties")
-@EnableJpaRepositories(basePackages = { "projetFormation.repository", "projetFormation.service" })
+@EnableJpaRepositories(basePackages = { "projetFormation.repository" })
+
 public class AppConfig {
 
 	@Autowired
