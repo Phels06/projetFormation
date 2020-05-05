@@ -22,8 +22,8 @@ public class ChienService {
 		if (chien.getRace().isEmpty()) {
 			chien.setRace("race non defini");
 		}
-		if (chien.getSurnom().isEmpty() || chien.getSexeChien() == null || chien.getAge() != null
-				|| chien.getPoids() != null) {
+		if (chien.getSurnom().isEmpty() || chien.getSexeChien() == null || chien.getAge() == null
+				|| chien.getPoids() == null) {
 			success = false;
 		}
 		if (success) {
@@ -32,6 +32,7 @@ public class ChienService {
 		return success;
 	}
 
+	
 	public Chien miseAjour(Chien chien) {
 		Optional<Chien> opt = chienRepository.findById(chien.getId());
 		if (opt.isPresent()) {
