@@ -12,25 +12,28 @@ import projetFormation.repository.PersonneRepository;
 
 @Service
 public class PersonneService {
-
+	
 	private Boolean succes = true;
 	
 	private static final Pattern[] inputRegexes = new Pattern[2];
 	private static final Pattern[] inputRegexesMail = new Pattern[1];
 
-	static {
-		inputRegexes[0] = Pattern.compile(".** [A-Z].** ");
-		inputRegexes[1] = Pattern.compile(".** [a-z].** ");
-	}
-
-	static {
-		inputRegexesMail[0] = Pattern.compile(".** [`[email protected]#$%^&** ()\\-__=+\\\\|\\[{\\]};:'\",<.>/?].** ");
-	}
+//	static {
+//		inputRegexes[0] = Pattern.compile(".** [A-Z].** ");
+//		inputRegexes[1] = Pattern.compile(".** [a-z].** ");
+//	}
+//
+//	static {
+//		inputRegexesMail[0] = Pattern.compile(".** [`[email protected]#$%^&** ()\\-__=+\\\\|\\[{\\]};:'\",<.>/?].** ");
+//	}
 
 	@Autowired
 	private PersonneRepository personneRepository;
 
-	public void ajout(Personne personne) {
+	
+	
+	
+	public boolean ajout(Personne personne) {
 		if (personne.getAdresse().getNumero() == null) {
 			succes = false;
 		}
@@ -55,23 +58,25 @@ public class PersonneService {
 		if (personne.getInscription().getMotdePasse().isEmpty()) {
 			succes = false;
 		}
-		for (Pattern inputRegex : inputRegexes) {
-			if (!inputRegex.matcher(personne.getInscription().getMotdePasse()).matches()) {
-				succes = false;
-			}
-		}
+//		for (Pattern inputRegex : inputRegexes) {
+//			if (!inputRegex.matcher(personne.getInscription().getMotdePasse()).matches()) {
+//				succes = false;
+//			}
+//		}
 		if (personne.getInscription().getMail().isEmpty()) {
 			succes = false;
 		}
-		for (Pattern inputRegexesMail : inputRegexesMail) {
-			if (!inputRegexesMail.matcher(personne.getInscription().getMotdePasse()).matches()) {
-				succes = false;
-			}
-		}
-		if (succes = true) {
+//		for (Pattern inputRegexesMail : inputRegexesMail) {
+//			if (!inputRegexesMail.matcher(personne.getInscription().getMotdePasse()).matches()) {
+//				succes = false;
+//			}
+//		}
+		if (succes == true) {
 			personneRepository.save(personne);
+			System.out.println(succes);
 		}
-
+		System.out.println(succes);
+		return succes;
 	}
 
 	
