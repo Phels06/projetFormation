@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:config.properties")
-@EnableJpaRepositories(basePackages = { "projetFormation.repository" })
+@EnableJpaRepositories(basePackages = { "projetFormation.repository", "projetFormation.service" })
 public class AppConfig {
 
 	@Autowired

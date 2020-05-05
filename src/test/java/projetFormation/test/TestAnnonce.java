@@ -20,6 +20,7 @@ import projetFormation.config.AppConfig;
 import projetFormation.entity.Annonce;
 import projetFormation.entity.Note;
 import projetFormation.repository.AnnonceRepository;
+import projetFormation.service.AnnonceService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(locations = { "/application-context.xml" })
@@ -28,8 +29,10 @@ public class TestAnnonce {
 
 	@Autowired
 	private AnnonceRepository annonceRepository;
+	@Autowired
+	private AnnonceService annonceService;
 	private static SimpleDateFormat sdf;
-	
+
 	@BeforeClass
 	public static void initDateFormat() {
 		sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,6 +54,64 @@ public class TestAnnonce {
 			annonceRepository.save(a);
 			assertNotNull(a.getId());
 			assertTrue(annonceRepository.findById(a.getId()).isPresent());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAjoutAnnonce() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("10/05/2020"), Note.N5);
+			annonceService.ajout(a);
+			
+			//assertTrue(annonceRepository.findById()(id)(a.getId()).isPresent());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+//	@Test
+//	@Transactional
+//	@Rollback(true)
+//	public void testInsertAnnonceDateOnly() {
+//		Annonce a;
+//		try {
+//			a = new Annonce(sdf.parse("10/05/2020"), null);
+//			assertNull(a.getId());
+//			annonceRepository.save(a);
+//			assertNotNull(a.getId());
+//			assertTrue(annonceRepository.findById(a.getId()).isPresent());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	@Test
+//	@Transactional
+//	@Rollback(true)
+//	public void testInsertAnnonceNoteOnly() {
+//		Annonce a;
+//		a = new Annonce(null, Note.N3);
+//		assertNull(a.getId());
+//		annonceRepository.save(a);
+//		assertNotNull(a.getId());
+//		assertTrue(annonceRepository.findById(a.getId()).isPresent());
+//	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAnnonceRecherche() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
+			annonceRepository.save(a);
+			
+			assertTrue(annonceService.recherche(a.getId()) != null);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
