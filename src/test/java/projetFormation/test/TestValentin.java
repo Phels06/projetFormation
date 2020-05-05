@@ -1,14 +1,14 @@
-package projetFormation.test;
-
-import projetFormation.context.Context;
-
-public class TestValentin {
-
-	public static void main(String[] args) {
-		Context.getEntityManagerFactory();
-		
-		Context.destroy();
-
-	}
-
-}
+//package projetFormation.test;
+//
+//import projetFormation.context.Context;
+//
+//public class TestValentin {
+//
+//	public static void main(String[] args) {
+//		Context.getEntityManagerFactory();
+//		
+//		Context.destroy();
+//
+//	}
+//
+//}

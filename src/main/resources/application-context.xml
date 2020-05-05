@@ -17,6 +17,9 @@
 	<context:property-placeholder
 		location="classpath:/config.properties" />
 
+	<context:component-scan
+		base-package="projetFormation.service"></context:component-scan>
+
 
 	<jpa:repositories
 		base-package="projetFormation.repository"></jpa:repositories>

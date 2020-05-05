@@ -23,7 +23,7 @@ public class AnnonceService {
 		if (annonce.getNote() == null) {
 			annonce.setNote(Note.N5);
 		}
-		if (annonce.getDateAnnonce() == null || annonce.getMaitre() == null || annonce.getChiens() == null) {
+		if (annonce.getDateAnnonce() == null || annonce.getMaitre() == null || annonce.getChiens().isEmpty()) {
 			succes = false;
 		}
 		if (succes) {

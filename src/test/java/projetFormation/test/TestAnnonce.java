@@ -1,11 +1,15 @@
 package projetFormation.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import projetFormation.config.AppConfig;
 import projetFormation.entity.Annonce;
+import projetFormation.entity.Chien;
 import projetFormation.entity.Note;
+import projetFormation.entity.Personne;
 import projetFormation.repository.AnnonceRepository;
 import projetFormation.service.AnnonceService;
 
@@ -37,11 +43,8 @@ public class TestAnnonce {
 	public static void initDateFormat() {
 		sdf = new SimpleDateFormat("dd/MM/yyyy");
 	}
-	
-	@Test
-	public void testAnnonceService() {
-		assertNotNull(annonceService);
-	}
+
+/////////////////////////////////////////REPOSITORY/////////////////////////////////////
 
 	@Test
 	public void testAnnonceRepository() {
@@ -54,7 +57,8 @@ public class TestAnnonce {
 	public void testInsertAnnonce() {
 		Annonce a;
 		try {
-			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
+			
 			assertNull(a.getId());
 			annonceRepository.save(a);
 			assertNotNull(a.getId());
@@ -64,61 +68,134 @@ public class TestAnnonce {
 		}
 	}
 
+//////////////////////////////////SERVICE//////////////////////////////
+
+	@Test
+	public void testAnnonceService() {
+		assertNotNull(annonceService);
+	}
+
 	@Test
 	@Transactional
 	@Rollback(true)
 	public void testServiceAjoutAnnonce() {
 		Annonce a;
 		try {
-			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
-			annonceService.ajout(a);
-			
-			//assertTrue(annonceRepository.findById()(id)(a.getId()).isPresent());
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
+			a.setMaitre(new Personne());
+			Set<Chien> chiens = new HashSet<>();
+			chiens.add(new Chien());
+			a.setChiens(chiens);
+			assertTrue(annonceService.ajout(a));
+			assertNotNull(a.getId());
+
+			assertTrue(annonceRepository.findById(a.getId()).isPresent());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
 
-//	@Test
-//	@Transactional
-//	@Rollback(true)
-//	public void testInsertAnnonceDateOnly() {
-//		Annonce a;
-//		try {
-//			a = new Annonce(sdf.parse("10/05/2020"), null);
-//			assertNull(a.getId());
-//			annonceRepository.save(a);
-//			assertNotNull(a.getId());
-//			assertTrue(annonceRepository.findById(a.getId()).isPresent());
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	@Test
-//	@Transactional
-//	@Rollback(true)
-//	public void testInsertAnnonceNoteOnly() {
-//		Annonce a;
-//		a = new Annonce(null, Note.N3);
-//		assertNull(a.getId());
-//		annonceRepository.save(a);
-//		assertNotNull(a.getId());
-//		assertTrue(annonceRepository.findById(a.getId()).isPresent());
-//	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAjoutAnnonceObjetIncompletDate() {
+		Annonce a;
+
+		a = new Annonce(null, Note.N3);
+		a.setMaitre(new Personne());
+		Set<Chien> chiens = new HashSet<>();
+		chiens.add(new Chien());
+		a.setChiens(chiens);
+		assertFalse(annonceService.ajout(a));
+		assertNull(a.getId());
+	}
+
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAjoutAnnonceObjetIncompletNote() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("11/05/2020"), null);
+			a.setMaitre(new Personne());
+			Set<Chien> chiens = new HashSet<>();
+			chiens.add(new Chien());
+			a.setChiens(chiens);
+			assertTrue(annonceService.ajout(a));
+			assertNotNull(a.getId());
+
+			assertTrue(annonceRepository.findById(a.getId()).isPresent());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAjoutAnnonceImcompletMaitre() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
+			Set<Chien> chiens = new HashSet<>();
+			chiens.add(new Chien());
+			a.setChiens(chiens);
+			assertFalse(annonceService.ajout(a));
+			assertNull(a.getId());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAjoutAnnonceImcompletChiens() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
+			a.setMaitre(new Personne());
+			assertFalse(annonceService.ajout(a));
+			assertNull(a.getId());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testServiceAnnonceMAJ() {
+		Annonce a;
+		try {
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
+			a.setMaitre(new Personne());
+			Set<Chien> chiens = new HashSet<>();
+			chiens.add(new Chien());
+			a.setChiens(chiens);
+			assertTrue(annonceService.ajout(a));
+
+			assertTrue(annonceRepository.findById(a.getId()).isPresent());
+			a.setDateAnnonce(sdf.parse("18/05/2020"));
+			a.setNote(Note.N5);
+			
+			annonceService.miseAjour(a);
+			assertEquals(annonceRepository.findById(a.getId()).get(),a);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	@Transactional
 	@Rollback(true)
 	public void testServiceAnnonceRecherche() {
 		Annonce a;
 		try {
-			a = new Annonce(sdf.parse("10/05/2020"), Note.N3);
+			a = new Annonce(sdf.parse("11/05/2020"), Note.N3);
 			annonceRepository.save(a);
 
-			assertNotNull(a.getId());
-			//System.out.println(annonceService.recherche(a.getId()));
-			assertTrue(annonceService.recherche(a.getId()) != null);
+			assertEquals(annonceRepository.findById(a.getId()).get(), annonceService.recherche(a.getId()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

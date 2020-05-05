@@ -17,11 +17,9 @@ public class PostulerService {
 	@Autowired
 	private PostulerRepository postulerRepository;
 
-	public boolean ajout(Personne personne, Annonce annonce) {
+	public boolean ajout(Postuler postuler) {
 		boolean succes = true;
-		if (personne != null && annonce != null) {
-			PostulerKey id = new PostulerKey(personne, annonce);
-			Postuler postuler = new Postuler(id);
+		if (postuler.getId().getPersonne() != null && postuler.getId().getAnnonce() != null) {
 			postulerRepository.save(postuler);
 		} else {
 			succes = false;
