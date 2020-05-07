@@ -1,8 +1,6 @@
 package projetFormation.service;
 
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,28 +10,19 @@ import projetFormation.repository.PersonneRepository;
 
 @Service
 public class PersonneService {
-	
-	private Boolean succes = true;
-	
-	private static final Pattern[] inputRegexes = new Pattern[2];
-	private static final Pattern[] inputRegexesMail = new Pattern[1];
 
-//	static {
-//		inputRegexes[0] = Pattern.compile(".** [A-Z].** ");
-//		inputRegexes[1] = Pattern.compile(".** [a-z].** ");
-//	}
-//
-//	static {
-//		inputRegexesMail[0] = Pattern.compile(".** [`[email protected]#$%^&** ()\\-__=+\\\\|\\[{\\]};:'\",<.>/?].** ");
-//	}
+	private String regex = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
 	@Autowired
 	private PersonneRepository personneRepository;
 
-	
-	
-	
+
 	public boolean ajout(Personne personne) {
+		Boolean succes = true;
+		char caractereString;
+		Boolean majusculeFlag = false;
+		Boolean minusculeFlag = false;
+		Boolean numberFlag = false;
 		if (personne.getAdresse().getNumero() == null) {
 			succes = false;
 		}
@@ -46,7 +35,7 @@ public class PersonneService {
 		if (personne.getAdresse().getCodePostal().isEmpty()) {
 			succes = false;
 		}
-		if (personne.getCivilite().getLabel().isEmpty()) {
+		if (personne.getCivilite() == null) {
 			succes = false;
 		}
 		if (personne.getPrenom().isEmpty()) {
@@ -58,33 +47,72 @@ public class PersonneService {
 		if (personne.getInscription().getMotdePasse().isEmpty()) {
 			succes = false;
 		}
-//		for (Pattern inputRegex : inputRegexes) {
-//			if (!inputRegex.matcher(personne.getInscription().getMotdePasse()).matches()) {
-//				succes = false;
-//			}
-//		}
+		// au moins 1 minuscule, 1 majuscule1 1 chiffre
+		if (succes == true) {
+			for (int i = 0; i < personne.getInscription().getMotdePasse().length(); i++) {
+				caractereString = personne.getInscription().getMotdePasse().charAt(i);
+				if (Character.isDigit(caractereString)) {
+					numberFlag = true;
+				} else if (Character.isUpperCase(caractereString)) {
+					majusculeFlag = true;
+				} else if (Character.isLowerCase(caractereString)) {
+					minusculeFlag = true;
+				}
+			}
+			if (numberFlag && majusculeFlag && minusculeFlag) {
+				succes = true;
+			} else {
+				succes = false;
+			}
+		}
 		if (personne.getInscription().getMail().isEmpty()) {
 			succes = false;
 		}
-//		for (Pattern inputRegexesMail : inputRegexesMail) {
-//			if (!inputRegexesMail.matcher(personne.getInscription().getMotdePasse()).matches()) {
-//				succes = false;
-//			}
-//		}
+		// test de l'email avec caractère spécial, utilisation d'une regex
+		if (personne.getInscription().getMail().matches(regex) == true && succes) {
+			succes = true;
+		} else {
+			succes = false;
+		}
 		if (succes == true) {
 			personneRepository.save(personne);
-			System.out.println(succes);
 		}
-		System.out.println(succes);
 		return succes;
 	}
 
-	
-
 	public Personne miseAjour(Personne personne) {
+		char caractereString;
+		Boolean majusculeFlag = false;
+		Boolean minusculeFlag = false;
+		Boolean numberFlag = false;
 		Optional<Personne> opt = personneRepository.findById(personne.getId());
 		if (opt.isPresent()) {
 			Personne personneEnBase = opt.get();
+			if (personne.getInscription().getMotdePasse() != null) {
+				for (int i = 0; i < personne.getInscription().getMotdePasse().length(); i++) {
+					caractereString = personne.getInscription().getMotdePasse().charAt(i);
+					if (Character.isDigit(caractereString)) {
+						numberFlag = true;
+					} else if (Character.isUpperCase(caractereString)) {
+						majusculeFlag = true;
+					} else if (Character.isLowerCase(caractereString)) {
+						minusculeFlag = true;
+					}
+				}
+				if (numberFlag && majusculeFlag && minusculeFlag) {
+					personneEnBase.getInscription().setMotdePasse((personne.getInscription().getMotdePasse()));
+				} else {
+					throw new IllegalArgumentException();
+				}
+			}
+			if (personne.getInscription().getMail() != null) {
+				if (personne.getInscription().getMail().matches(regex) == true) {
+					personneEnBase.getInscription().setMail((personne.getInscription().getMail()));
+				} else {
+					personne = personneEnBase;
+					throw new IllegalArgumentException();
+				}
+			}
 			if (personne.getAdresse().getNumero() != null) {
 				personneEnBase.getAdresse().setNumero((personne.getAdresse().getNumero()));
 			}
@@ -97,44 +125,25 @@ public class PersonneService {
 			if (personne.getAdresse().getCodePostal() != null) {
 				personneEnBase.getAdresse().setCodePostal((personne.getAdresse().getCodePostal()));
 			}
-			if (personne.getCivilite().getLabel() != null) {
-				personneEnBase.getCivilite().setLabel(personne.getCivilite().getLabel());
-			}
 			if (personne.getPrenom() != null) {
-				personne.setPrenom(personne.getPrenom());
+				personneEnBase.setPrenom(personne.getPrenom());
 			}
 			if (personne.getNom() != null) {
-				personne.setNom(personne.getNom());
+				personneEnBase.setNom(personne.getNom());
 			}
 			if (personne.getNom() != null) {
-				personne.setNom(personne.getNom());
+				personneEnBase.setNom(personne.getNom());
 			}
-			if (personne.getInscription().getMotdePasse() != null) {
-				for (Pattern inputRegex : inputRegexes) {
-					if (!inputRegex.matcher(personne.getInscription().getMotdePasse()).matches()) {
-						throw new IllegalArgumentException();
-					}
-				}
-				personneEnBase.getInscription().setMotdePasse((personne.getInscription().getMotdePasse()));
+			if (personne.getCivilite().getLabel() != null) {
+				personneEnBase.setCivilite(personne.getCivilite());
 			}
-			
-			if (personne.getInscription().getMail() != null) {
-				for (Pattern inputRegexesMail : inputRegexesMail) {
-					if (!inputRegexesMail.matcher(personne.getInscription().getMotdePasse()).matches()) {
-						throw new IllegalArgumentException();
-					}
-				}
-				personneEnBase.getInscription().setMail((personne.getInscription().getMail()));
-			}
-			personneRepository.save(personneEnBase);
+			this.ajout(personneEnBase);
 			return personneEnBase;
 		} else {
 			return null;
 		}
 	}
 
-	
-	
 	public Personne recherche(Integer id) {
 		Optional<Personne> opt = personneRepository.findById(id);
 		if (opt.isPresent()) {
@@ -142,5 +151,7 @@ public class PersonneService {
 		}
 		throw new IllegalArgumentException();
 	}
+	
+
 
 }

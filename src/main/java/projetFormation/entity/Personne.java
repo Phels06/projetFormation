@@ -41,10 +41,11 @@ public class Personne {
 	@Enumerated(EnumType.STRING)
 	private Civilite civilite;
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "numero", column = @Column(name = "number_person")),
-			@AttributeOverride(name = "rue", column = @Column(name = "street_person", length = 200)),
-			@AttributeOverride(name = "codePostal", column = @Column(name = "zip_code_person", length = 20)),
-			@AttributeOverride(name = "ville", column = @Column(name = "city_person", length = 150)) })
+	@AttributeOverrides({
+			@AttributeOverride(name = "numero", column = @Column(name = "number_person", nullable = false)),
+			@AttributeOverride(name = "rue", column = @Column(name = "street_person", length = 200, nullable = false)),
+			@AttributeOverride(name = "codePostal", column = @Column(name = "zip_code_person", length = 20, nullable = false)),
+			@AttributeOverride(name = "ville", column = @Column(name = "city_person", length = 150, nullable = false)) })
 	private Adresse adresse;
 	@OneToMany(mappedBy = "personne")
 	private List<Avis> avis;
@@ -58,6 +59,12 @@ public class Personne {
 	private int version;
 
 	public Personne() {
+	}
+
+	public Personne(Integer id, String prenom, String nom) {
+		this.id=id;
+		this.prenom = prenom;
+		this.nom = nom;
 	}
 
 	public Personne(String prenom, String nom, Inscription inscription) {
@@ -81,6 +88,16 @@ public class Personne {
 	}
 
 	public Personne(String prenom, String nom, Inscription inscription, Civilite civilite, Adresse adresse) {
+		this.prenom = prenom;
+		this.nom = nom;
+		this.inscription = inscription;
+		this.civilite = civilite;
+		this.adresse = adresse;
+	}
+
+	public Personne(Integer id, String prenom, String nom, Inscription inscription, Civilite civilite,
+			Adresse adresse) {
+		this.id = id;
 		this.prenom = prenom;
 		this.nom = nom;
 		this.inscription = inscription;
