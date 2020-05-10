@@ -2,7 +2,7 @@ package projetFormation.test;
 
 import static org.junit.Assert.*;
 
-
+import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,14 +156,15 @@ public class TestPersonne {
 	}
 	
 	
-//	@Test
-//	@Transactional
-//	@Rollback(true)
-//	public void testRechercheParVille() {
-//		Personne personne1 = new Personne("testPrenom","testNom",new Inscription("test@gmail.com", "Ree8rr"),Civilite.M,new Adresse(1, "testRue", "testCP", "testVille"));
-//		personneRepository.findParVille("testVille");
-//		assertTrue(personneRepository.findParVille("testVille") != null);
-//	}
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testRechercheByVille() {
+		Personne personne1 = new Personne("testPrenom","testNom",new Inscription("test@gmail.com", "Ree8rr"),Civilite.M,new Adresse(1, "testRue", "testCP", "testVille"));
+		personneRepository.save(personne1);
+		assertFalse(personneRepository.findByVille("testVille").isEmpty());
+		//System.out.println("hey, le resultat du test c'est ça >>"+personneRepository.findByVille("testVille"));
+	}
 	
 	
 }
