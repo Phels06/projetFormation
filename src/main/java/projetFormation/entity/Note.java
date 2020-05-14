@@ -12,4 +12,13 @@ public enum Note {
 	public String getNote() {
 		return label;
 	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
 }
