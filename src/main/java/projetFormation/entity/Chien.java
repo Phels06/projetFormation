@@ -42,6 +42,9 @@ public class Chien {
 	@ManyToOne
 	@JoinColumn(name = "id_ad", foreignKey = @ForeignKey(name = "dog_ad_fk"))
 	private Annonce annonce;
+	@ManyToOne
+	@JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "dog_person_fk"))
+	private Personne personne;
 	@Version
 	private int version;
 
@@ -61,6 +64,21 @@ public class Chien {
 		this.photo = photo;
 		this.poids = poids;
 		this.race = race;
+		this.version = version;
+	}
+	
+
+	public Chien(Integer id, String surnom, SexeChien sexeChien, Integer age, String photo, Integer poids, String race,
+			Annonce annonce, Personne personne, int version) {
+		this.id = id;
+		this.surnom = surnom;
+		this.sexeChien = sexeChien;
+		this.age = age;
+		this.photo = photo;
+		this.poids = poids;
+		this.race = race;
+		this.annonce = annonce;
+		this.personne = personne;
 		this.version = version;
 	}
 
@@ -126,6 +144,14 @@ public class Chien {
 
 	public void setAnnonce(Annonce annonce) {
 		this.annonce = annonce;
+	}
+
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
 	}
 
 	public int getVersion() {

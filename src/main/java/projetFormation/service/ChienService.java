@@ -1,5 +1,6 @@
 package projetFormation.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ChienService {
 			chien.setRace("race non defini");
 		}
 		if (chien.getSurnom().isEmpty() || chien.getSexeChien() == null || chien.getAge() == null
-				|| chien.getPoids() == null) {
+				|| chien.getPoids() == null || chien.getAnnonce() == null || chien.getPersonne() == null) {
 			success = false;
 		}
 		if (success) {
@@ -55,6 +56,12 @@ public class ChienService {
 			if (chien.getRace() != null) {
 				chienEnBase.setRace(chien.getRace());
 			}
+			if (chien.getAnnonce() != null) {
+				chienEnBase.setAnnonce(chien.getAnnonce());
+			}
+			if (chien.getPersonne() != null) {
+				chienEnBase.setPersonne(chien.getPersonne());
+			}
 			chienRepository.save(chienEnBase);
 			return chienEnBase;
 		} else {
@@ -62,8 +69,23 @@ public class ChienService {
 		}
 	}
 
+	
 	public Chien recherche(Integer id) {
 		Optional<Chien> opt = chienRepository.findById(id);
+		if (opt.isPresent()) {
+			return opt.get();
+		}
+		throw new IllegalArgumentException();
+	}
+	
+	
+	public List<Chien> rechercheAll() {
+		return chienRepository.findAll();
+	}
+	
+	
+	public Chien rechercheTousParMaitre(Integer id) {
+		Optional<Chien> opt = chienRepository.findByIdWithPersonne(id);
 		if (opt.isPresent()) {
 			return opt.get();
 		}
