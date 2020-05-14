@@ -1,12 +1,7 @@
 package projetFormation.test;
 
-import static org.junit.Assert.*;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import projetFormation.config.AppConfig;
@@ -16,24 +11,20 @@ import projetFormation.entity.Inscription;
 import projetFormation.entity.Personne;
 import projetFormation.service.AvisService;
 
-public class TestAvis {
-	private static AnnotationConfigApplicationContext ctx;
-	@BeforeClass
-	public static void ConnexionBDDSpring() {
-		ctx=new AnnotationConfigApplicationContext(AppConfig.class);
+public class TestSally {
+
+	public static void main(String[] args) {
+
+		AnnotationConfigApplicationContext ctx=new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		Personne Ivan = new Personne();
+		Ivan.setPrenom("Ivan");
+		Ivan.setNom("Ivan");
 	
 		Inscription ins = new Inscription();
 		ins.setDateInscription(LocalDate.now());
 		ins.setMail("monmail");
 		ins.setMotdePasse("monmotdepase");
-		
-		Personne Ivan = new Personne();
-		Ivan.setPrenom("Ivan");
-		Ivan.setNom("Touré");
-		ins.setDateInscription(LocalDate.now());
-		ins.setMail("monmail");
-		ins.setMotdePasse("monmotdepase");
-		
 		
 		Ivan.setInscription(ins);
 		
@@ -51,12 +42,7 @@ public class TestAvis {
 		
 		AvisService as = new AvisService();
 		as.ajout(av);
-		
-	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+	} 
 
 }
