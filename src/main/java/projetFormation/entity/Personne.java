@@ -48,6 +48,8 @@ public class Personne {
 			@AttributeOverride(name = "ville", column = @Column(name = "city_person", length = 150, nullable = false)) })
 	private Adresse adresse;
 	@OneToMany(mappedBy = "personne")
+	private Set<Chien> chiens;
+	@OneToMany(mappedBy = "personne")
 	private List<Avis> avis;
 	@OneToMany(mappedBy = "id.personne")
 	private Set<Postuler> postulers;
@@ -151,6 +153,14 @@ public class Personne {
 
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
+	}
+
+	public Set<Chien> getChiens() {
+		return chiens;
+	}
+
+	public void setChiens(Set<Chien> chiens) {
+		this.chiens = chiens;
 	}
 
 	public List<Avis> getAvis() {
