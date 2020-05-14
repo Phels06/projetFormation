@@ -1,28 +1,28 @@
-//package projetFormation.test;
-//
-//import static org.junit.Assert.*;
-//
-//import java.text.SimpleDateFormat;
-//import java.time.LocalDate;
-//
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-//
-//import projetFormation.config.AppConfig;
-//import projetFormation.entity.Adresse;
-//import projetFormation.entity.Avis;
-//import projetFormation.entity.Inscription;
-//import projetFormation.entity.Personne;
-//import projetFormation.service.AvisService;
-//
-//@RunWith(SpringJUnit4ClassRunner.class)
-////@ContextConfiguration(locations = {"/application-context.xml"})
-//@ContextConfiguration(classes = { AppConfig.class })
-//public class TestAvis {
+package projetFormation.test;
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import projetFormation.config.AppConfig;
+import projetFormation.entity.Adresse;
+import projetFormation.entity.Avis;
+import projetFormation.entity.Inscription;
+import projetFormation.entity.Personne;
+import projetFormation.service.AvisService;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"/application-context.xml"})
+@ContextConfiguration(classes = { AppConfig.class })
+public class TestAvis {
 //	private static AnnotationConfigApplicationContext ctx;
 //	@BeforeClass
 //	public static void ConnexionBDDSpring() {
@@ -60,9 +60,9 @@
 //		
 //	}
 //
-//	//@Test
-//	//public void test() {
-//	//	fail("Not yet implemented");
-//	//}
-//
-//}
+	@Test
+	public void test() {
+		// fail("Not yet implemented");
+	}
+
+}
