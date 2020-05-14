@@ -26,7 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.persistence.Id;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "ad")
@@ -38,11 +39,15 @@ public class Annonce {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqAnnonce")
 	@Column(name = "id_ad")
 	private Integer id;
+	
 	@Column(name = "date_ad")
 	@Temporal(TemporalType.DATE)
+	@FutureOrPresent
 	private Date dateAnnonce;
+	
 	@Enumerated(EnumType.STRING)
 	private Note note;
+	
 	@Embedded
 	@AttributeOverrides({ @AttributeOverride(name = "nbChiens", column = @Column(name = "number_of_dogs")),
 			@AttributeOverride(name = "nbHeures", column = @Column(name = "number_of_hours")),
@@ -52,6 +57,7 @@ public class Annonce {
 	private Tarif tarif;
 	@OneToOne()
 	@JoinColumn(name = "id_master", foreignKey = @ForeignKey(name = "ad_master_fk"))
+	@NotEmpty
 	private Personne maitre;
 	@OneToOne()
 	@JoinColumn(name = "id_walker", foreignKey = @ForeignKey(name = "ad_walker_fk"))

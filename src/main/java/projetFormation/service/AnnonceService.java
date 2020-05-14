@@ -1,5 +1,6 @@
 package projetFormation.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,16 @@ public class AnnonceService {
 			return opt.get();
 		}
 		throw new IllegalArgumentException();
+	}
+	
+	public List<Annonce> rechercheTous() {
+		return annonceRepository.findAll();
+	}
+	
+	public boolean supprimerParId(Integer id) {
+		boolean succes = true;
+		annonceRepository.deleteById(id);
+		return succes;
 	}
 
 }
